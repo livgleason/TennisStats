@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WTA Rankings</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+        th, td {
+            text-align: left;
+            padding: 12px;
+        }
+        th {
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <h1>Top 32 WTA Rankings</h1>
+        {{ table_html | safe }}
+    </div>
+</body>
+</html>

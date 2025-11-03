@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Home Page</title>
+        <link rel="stylesheet" href="static/index.css">
+    </head>
+    <body>
+        <div class="title">
+            <p class="title-words">
+                TENNIS
+            </p>
+            <img class="title-picture" src="static/tennisball.png">
+            <p class="title-words">
+                 CENTER
+            </p>
+        </div>
+        <form action="{{ url_for('search') }}" method="get">
+            <input class="search-bar" type="text" name="player" placeholder="Search for player" required>
+        </form>
+        <div class="button-container">
+            <img class="arrow" src="static/racetoriyadh.png">
+            <a href="{{ url_for('wta') }}">
+            <img class="tour-button" src="static/wta.png">
+            </a>
+            <a href="{{ url_for('atp') }}">
+            <img class="tour-button" src="static/atp.png">
+            </a>
+            <img class="arrow" src="static/racetoturin.png">
+        </div>
+        <div class="graph-section">
+            <div class="graph-container">
+                <div class="graph-item">
+                    {{ wta_html | safe }}
+                </div>
+                <div class="graph-item">
+                    {{ atp_html | safe }}
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
