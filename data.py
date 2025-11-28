@@ -35,10 +35,10 @@ def stats(match_df):
     loser_stats = loser_stats.rename(columns={'loser_name': 'Name', 'l_ace': 'Ace', 'l_df': 'Double_Faults', 'l_svpt': 'Total_Serve_Points_Played', 'l_1stIn': 'First_Serve_In', 'l_1stWon': 'First_Serve_Won', 'l_2ndWon': 'Second_Serve_Won', 'l_SvGms': 'Service_Games', 'l_bpSaved': 'Break_Points_Saved', 'l_bpFaced':'Break_Points_Faced'})
     player_stats = pd.concat([winner_stats, loser_stats])
     player_stats = player_stats.dropna()
-    player_stats["First_Serve_Perc"] = player_stats["First_Serve_In"] / player_stats["Total_Serve_Points_Played"] 
-    player_stats["First_Serve_Perc_Won"] = player_stats["First_Serve_Won"] / player_stats["First_Serve_In"]
-    player_stats["Second_Serve_Perc_Won"] =  player_stats["Second_Serve_Won"] / (player_stats["Total_Serve_Points_Played"] - player_stats["First_Serve_In"] - player_stats["Double_Faults"])
-    player_stats["Perc_Break_Points_Saved"] = player_stats["Break_Points_Saved"] / player_stats["Break_Points_Faced"]
+    player_stats["First_Serve_Perc"] = (player_stats["First_Serve_In"] / player_stats["Total_Serve_Points_Played"]) * 100
+    player_stats["First_Serve_Perc_Won"] = (player_stats["First_Serve_Won"] / player_stats["First_Serve_In"]) * 100
+    player_stats["Second_Serve_Perc_Won"] =  (player_stats["Second_Serve_Won"] / (player_stats["Total_Serve_Points_Played"] - player_stats["First_Serve_In"] - player_stats["Double_Faults"])) * 100
+    player_stats["Perc_Break_Points_Saved"] = (player_stats["Break_Points_Saved"] / player_stats["Break_Points_Faced"]) * 100
     player_stats = player_stats.groupby("Name", as_index=False).mean().round(decimals=2)
     return player_stats
 
@@ -62,3 +62,25 @@ def graphing_data(rankings_df, players_df):
 
 atp_graph_data = graphing_data(atp_rankings_df, atp_players_df)
 wta_graph_data = graphing_data(wta_rankings_df, wta_players_df)
+
+def stats_leaders(tour_tbl, variable):
+    sorted_df = tour_tbl.sort_values(by=variable, ascending=False).head(3)
+    
+    leaders = []
+    for _, row in sorted_df.iterrows():
+        leaders.append({
+            'name': row['Player'],
+            'rank': int(row['Ranking']),
+            'value': round(row[variable], 2)
+        })
+    
+    return leaders
+
+wta_aces = stats_leaders(wta_stats, 'Ace')
+wta_firstserve = stats_leaders(wta_stats, 'First_Serve_Perc')
+wta_bpfaced = stats_leaders(wta_stats, 'Perc_Break_Points_Saved')
+atp_aces = stats_leaders(atp_stats, 'Ace')
+atp_firstserve = stats_leaders(atp_stats, 'First_Serve_Perc')
+atp_bpfaced = stats_leaders(atp_stats, 'Perc_Break_Points_Saved')
+
+all_players = sorted(list(set(atp_df['Player'].tolist() + wta_df['Player'].tolist())))
