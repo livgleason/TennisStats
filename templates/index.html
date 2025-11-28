@@ -1,41 +1,254 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Home Page</title>
-        <link rel="stylesheet" href="static/index.css">
+        <meta charset="UTF-8">
+        <title>Tennis Center - Professional Player Analytics</title>
+        <style>
+            * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: #ffffff;
+            color: #1a1a1a;
+            line-height: 1.5;
+        }
+
+        .header {
+            background: #ffffff;
+            padding: 30px 40px;
+            border-bottom: 3px solid black;
+            top: 0;
+        }
+
+        .logo-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo {
+            font-size: 3.5rem;
+            font-weight: 900;
+            letter-spacing: -1px;
+            color: #1a1a1a;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .tennis-ball {
+            width: 50px;
+            height: 50px;
+            background: #c9fd02;
+            border-radius: 50%;
+            position: relative;
+            box-shadow: 0 4px 10px rgba(201, 253, 2, 0.3);
+        }
+
+        .tennis-ball::before,
+        .tennis-ball::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 20px;
+            border: 2px solid #1a1a1a;
+            border-radius: 50%;
+        }
+
+        .tennis-ball::before {
+            top: 5px;
+            transform: rotate(-30deg);
+        }
+
+        .tennis-ball::after {
+            bottom: 5px;
+            transform: rotate(30deg);
+        }
+
+        .nav-bar {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            padding-top: 20px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #1a1a1a;
+            font-weight: 600;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 10px 20px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .nav-link:hover {
+            background: #c9fd02;
+            border-color: #1a1a1a;
+            transform: translateY(-2px);
+        }
+
+        .search-section {
+            background: #f8f9fa 100%;
+            padding: 60px 20px;
+        }
+
+        .search-container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .search-title {
+            font-size: 30px;
+            font-weight: 900;
+            letter-spacing: -1px;
+            margin-bottom: 20px;
+            color: #1a1a1a;
+            text-align: center;
+            gap: 15px;
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 20px 25px;
+            font-size: 1.1rem;
+            border: 3px solid #1a1a1a;
+            border-radius: 8px;
+            background: #ffffff;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .search-bar:focus {
+            outline: none;
+            border-color: #c9fd02;
+            box-shadow: 0 0 0 3px rgba(201, 253, 2, 0.2);
+        }
+
+        .search-bar::placeholder {
+            color: #999;
+        }
+
+        .graph-title {
+            font-size: 40px;
+            font-weight: 900;
+            letter-spacing: -1px;
+            color: #1a1a1a;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .graph-title::after {
+            content: '';
+            display: block;
+            width: 160px;
+            height: 4px;
+            background: black;
+            margin: 1rem auto 0;
+        }
+
+        .graph-label {
+            font-size: 30px;
+            font-weight: 900;
+            letter-spacing: -1px;
+            color: #1a1a1a;
+            text-align: center;
+        }
+
+        .graph-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 80px;
+            margin-top: 30px;
+            margin-bottom: 50px;
+        }
+
+        .graph-item {
+            background: #ffffff;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .graph-item:hover {
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            border-color: #c9fd02;
+        }
+
+        .footer {
+            background: #f8f9fa 100%;
+            padding: 40px 20px;
+        }
+
+
+        </style>
     </head>
     <body>
-        <div class="title">
-            <p class="title-words">
-                TENNIS
-            </p>
-            <img class="title-picture" src="static/tennisball.png">
-            <p class="title-words">
-                 CENTER
-            </p>
+        <div class="header">
+            <div class="logo-container">
+                <div class="logo">
+                    TENNIS
+                    <div class="tennis-ball"></div>
+                    CENTER
+                </div>
+            </div>
+            <nav class="nav-bar">
+                <a href="{{ url_for('home') }}" class="nav-link active">Home</a>
+                <a href="{{ url_for('wta') }}" class="nav-link">WTA Tour</a>
+                <a href="{{ url_for('atp') }}" class="nav-link">ATP Tour</a>
+            </nav>
         </div>
-        <form action="{{ url_for('search') }}" method="get">
-            <input class="search-bar" type="text" name="player" placeholder="Search for player" required>
-        </form>
-        <div class="button-container">
-            <img class="arrow" src="static/racetoriyadh.png">
-            <a href="{{ url_for('wta') }}">
-            <img class="tour-button" src="static/wta.png">
-            </a>
-            <a href="{{ url_for('atp') }}">
-            <img class="tour-button" src="static/atp.png">
-            </a>
-            <img class="arrow" src="static/racetoturin.png">
+        <div class="search-section">
+            <div class="search-container">
+                <div class="search-title">
+                    Keep up with your favorite players!
+                </div>
+                <form action="{{ url_for('search') }}" method="get">
+                    <input class="search-bar" type="text" name="player" list="player-list" placeholder="Enter player name...">
+                    {% if all_players %}
+                    <datalist id="player-list">
+                        {% for player in all_players %}
+                        <option value="{{ player }}"></option>
+                        {% endfor %}
+                    </datalist>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+        <div class="graph-title">
+            RACE TO YEAR END NO. 1
         </div>
         <div class="graph-section">
             <div class="graph-container">
                 <div class="graph-item">
+                    <div class="graph-label">
+                        WTA Tour
+                    </div>
                     {{ wta_html | safe }}
                 </div>
                 <div class="graph-item">
+                    <div class="graph-label">
+                        ATP Tour
+                    </div>
                     {{ atp_html | safe }}
                 </div>
             </div>
+        </div>
+        <div class="footer">
+
         </div>
     </body>
 </html>
