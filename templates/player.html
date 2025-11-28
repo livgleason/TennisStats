@@ -1,23 +1,254 @@
+
 <!DOCTYPE html>
 <html>
 <head>
     <title>{{player.name_first}} {{player.name_last}}</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
+    <style>
+
+        .header {
+            background: #ffffff;
+            padding: 30px 40px;
+            border-bottom: 3px solid black;
+            top: 0;
+        }
+
+        .logo-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo {
+            font-size: 3.5rem;
+            font-weight: 900;
+            letter-spacing: -1px;
+            color: #1a1a1a;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .tennis-ball {
+            width: 50px;
+            height: 50px;
+            background: #c9fd02;
+            border-radius: 50%;
+            position: relative;
+            box-shadow: 0 4px 10px rgba(201, 253, 2, 0.3);
+        }
+
+        .tennis-ball::before,
+        .tennis-ball::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 20px;
+            border: 2px solid #1a1a1a;
+            border-radius: 50%;
+        }
+
+        .tennis-ball::before {
+            top: 5px;
+            transform: rotate(-30deg);
+        }
+
+        .tennis-ball::after {
+            bottom: 5px;
+            transform: rotate(30deg);
+        }
+
+        .nav-bar {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            padding-top: 20px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #1a1a1a;
+            font-weight: 600;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 10px 20px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .nav-link:hover {
+            background: #c9fd02;
+            border-color: #1a1a1a;
+            transform: translateY(-2px);
+        }
+        
+        .profile-card {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
+            margin-top: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .profile-header {
+            background: white;
+            color: #1a1a1a;
+            padding: 40px;
+            text-align: center;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        
+        .profile-header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 0;
+            color: #1a1a1a;
+        }
+        
+        .profile-body {
+            padding: 40px;
+        }
+        
+        .info-section {
+            margin-bottom: 40px;
+        }
+        
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 25px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #1a1a1a;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        
+        .info-item {
+            background: #fafafa;
+            padding: 24px;
+            border-radius: 4px;
+            border: 1px solid #e0e0e0;
+            transition: all 0.2s ease;
+        }
+        
+        .info-item:hover {
+            background: #f5f5f5;
+            border-color: #c9fd02;
+        }
+        
+        .info-label {
+            font-size: 0.8rem;
+            color: #666;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+        
+        .info-value {
+            font-size: 1.4rem;
+            color: #1a1a1a;
+            font-weight: 700;
+        }
+        
+        .stat-highlight {
+            color: #1a1a1a;
+        }
+    </style>
 </head>
 <body>
-    <div class="container mt-4">
-        <h1>{{player.Name}}</h1>
-        <p>Country: {{player.ioc}}</p>
-        <p>Birthdate: {{player.dob}}</p>
-        <p>Height (cm): {{player.height}}</p>
-        <p>Dominant Hand: {{player.hand}}</p>
-        <h1>YTD Average Match Stats</h1>
-        <p>Aces: {{player.Ace}}</p>
-        <p>Double Faults: {{player.Double_Faults}}</p>
-        <p>First Serve Percentage: {{player.First_Serve_Perc}}</p>
-        <p>First Serve Percentage Won: {{player.First_Serve_Perc_Won}}</p>
-        <p>Second Serve Percentage Won: {{player.Second_Serve_Perc_Won}}</p>
-        <p>Break Points Percentage Saved: {{player.Perc_Break_Points_Saved}}</p>
+    <div class="header">
+        <div class="logo-container">
+            <div class="logo">
+                TENNIS
+                <div class="tennis-ball"></div>
+                CENTER
+            </div>
+        </div>
+        <nav class="nav-bar">
+            <a href="{{ url_for('home') }}" class="nav-link active">Home</a>
+            <a href="{{ url_for('wta') }}" class="nav-link">WTA Tour</a>
+            <a href="{{ url_for('atp') }}" class="nav-link">ATP Tour</a>
+        </nav>
+    </div>
+    <div class="profile-card">
+        <div class="profile-header">
+            <h1>{{player.Name}}</h1>
+        </div>
+        
+        <div class="profile-body">
+            <div class="info-section">
+                <h2 class="section-title">Player Information</h2>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">Country</div>
+                        <div class="info-value">{{player.ioc}}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Birthdate</div>
+                        <div class="info-value">{{player.dob}}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Height</div>
+                        <div class="info-value">{{player.height}} cm</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Dominant Hand</div>
+                        <div class="info-value">{{player.hand}}</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="info-section">
+                <h2 class="section-title">YTD Average Match Stats</h2>
+                <div class="stats-grid">
+                    <div class="info-item">
+                        <div class="info-label">Aces</div>
+                        <div class="info-value stat-highlight">{{player.Ace}}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Double Faults</div>
+                        <div class="info-value stat-highlight">{{player.Double_Faults}}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">First Serve %</div>
+                        <div class="info-value stat-highlight">{{player.First_Serve_Perc}}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">1st Serve Won %</div>
+                        <div class="info-value stat-highlight">{{player.First_Serve_Perc_Won}}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">2nd Serve Won %</div>
+                        <div class="info-value stat-highlight">{{player.Second_Serve_Perc_Won}}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Break Points Saved %</div>
+                        <div class="info-value stat-highlight">{{player.Perc_Break_Points_Saved}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>
